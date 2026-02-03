@@ -44,3 +44,6 @@ coverage/
 # Git submodules (remove nested .git folders)
 BACKEND/.git/
 FRONTEND/.git/
+
+# Ignore full BACKEND directory (keep local copy)
+BACKEND/
