@@ -1,4 +1,1073 @@
-Project Description
-Designed and developed a multi-tenant SaaS work management platform that enables organizations to plan, track, and execute tasks through configurable workflows and visual boards.
-The system supports project and portfolio organization, role-based access control, activity tracking, automation rules, analytics dashboards, and subscription-based access.
-Built with a scalable backend architecture, secure authentication, and cloud deployment to support real-world collaboration, reporting, and operational reliability.
+# Multi-Tenant SaaS Work Management Platform
+
+> **DOPS** - A comprehensive, enterprise-grade work orchestration and management platform that enables organizations to plan, track, and execute tasks through configurable workflows, visual boards, and advanced analytics.
+
+![React](https://img.shields.io/badge/React-18.2.0-blue?style=flat-square)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.3-blue?style=flat-square)
+![Express](https://img.shields.io/badge/Express-5.2.1-green?style=flat-square)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Latest-336791?style=flat-square)
+![Redis](https://img.shields.io/badge/Redis-Latest-DC382D?style=flat-square)
+![Node.js](https://img.shields.io/badge/Node.js-18+-339933?style=flat-square)
+
+---
+
+## 📋 Table of Contents
+
+- [Overview](#overview)
+- [Features](#features)
+- [Architecture](#architecture)
+- [Tech Stack](#tech-stack)
+- [Project Structure](#project-structure)
+- [Installation & Setup](#installation--setup)
+- [Configuration](#configuration)
+- [Running the Application](#running-the-application)
+- [API Documentation](#api-documentation)
+- [Frontend Modules](#frontend-modules)
+- [Backend Modules](#backend-modules)
+- [Database Schema](#database-schema)
+- [Authentication & Security](#authentication--security)
+- [Deployment](#deployment)
+- [Contributing](#contributing)
+- [License](#license)
+
+---
+
+## 🎯 Overview
+
+DOPS is a **multi-tenant SaaS platform** designed for modern organizations to:
+
+- **Plan & Organize**: Create projects, manage portfolios, and define workflows
+- **Track & Execute**: Use Kanban boards and task management for team collaboration
+- **Visualize & Analyze**: Real-time dashboards with comprehensive analytics
+- **Automate & Scale**: Configure automation rules and scale workflows
+- **Manage Access**: Role-based access control with granular permissions
+- **Collaborate**: Team management, activity tracking, and real-time updates
+
+The platform supports:
+- ✅ Multiple organizations (multi-tenancy)
+- ✅ Subscription-based access models
+- ✅ Role-based access control (RBAC)
+- ✅ Custom workflows and automation
+- ✅ Advanced analytics and reporting
+- ✅ Cloud deployment ready
+
+---
+
+## ✨ Features
+
+### 🔐 Authentication & Security
+- Secure registration and login
+- JWT-based authentication
+- Password hashing with bcrypt
+- Multi-tenant isolation
+- Session management with Redis
+
+### 📊 Dashboard & Analytics
+- Real-time metrics (Tasks, In Progress, Overdue)
+- Team performance overview
+- Task throughput analytics
+- Project burndown forecasts
+- Activity feed and recent updates
+- Multiple time range filters (24h, 7d, 30d, 90d)
+
+### ✅ Task Management
+- **Kanban Board View**: Drag-and-drop task cards across columns
+- **List View**: Traditional table-based task view
+- Task creation, editing, and deletion
+- Priority levels and status tracking
+- Task assignment and delegation
+- Due date management
+- Activity and comment history
+
+### 📁 Project Management
+- Create and organize projects
+- Portfolio management
+- Project progress tracking
+- Team member assignment
+- Project settings and configuration
+- Project archiving and restoration
+
+### 🔄 Workflow Management
+- **Custom Workflows**: Define custom workflow states and transitions
+- **Workflow Configuration**: Create and manage workflow templates
+- **Automation Rules**: Set up automated task transitions and notifications
+- **Workflow Templates**: Pre-built and custom templates
+- **State Management**: Flexible state definitions
+
+### 👥 Team & Access Management
+- **RBAC System**: Role-based permissions (Admin, Manager, Team Lead, Member)
+- **Team Management**: Invite and manage team members
+- **Permission Granularity**: Fine-grained access control
+- **User Management**: User profiles and preferences
+- **Activity Audit**: Track all user activities
+
+### 📈 Analytics & Reporting
+- Task distribution charts
+- Team performance metrics
+- Project health indicators
+- Throughput analysis
+- Custom report generation
+- Data export capabilities
+
+### 🎨 Modern UI/UX
+- Dark theme with gradient accents
+- Responsive design (mobile, tablet, desktop)
+- Smooth animations and transitions
+- Accessibility compliant (WCAG)
+- Intuitive navigation
+
+---
+
+## 🏗️ Architecture
+
+### High-Level Architecture
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                     Client Layer (Frontend)                 │
+│  React + TypeScript + Vite + Tailwind CSS + Zustand        │
+└─────────────────────────┬───────────────────────────────────┘
+                          │ REST API / HTTP
+┌─────────────────────────▼───────────────────────────────────┐
+│                   API Layer (Backend)                       │
+│  Express.js + Node.js + JWT + RBAC                         │
+├─────────────────────────────────────────────────────────────┤
+│ Authentication │ Tasks │ Projects │ Workflows │ Analytics   │
+│ Users          │ Automation │ Webhooks │ Workers            │
+└────────┬────────────────────────────────┬────────────────────┘
+         │                                │
+┌────────▼──────────┐        ┌────────────▼──────────────┐
+│  PostgreSQL DB    │        │  Redis Cache & Queue      │
+│  (Relational)     │        │  (Session, Caching, Jobs) │
+└───────────────────┘        └──────────────────────────┘
+```
+
+### Multi-Tenancy Model
+- **Database-Level Isolation**: Each tenant has isolated data
+- **Tenant Context**: Tenant ID injected into requests
+- **Row-Level Security**: Tenant-aware queries
+- **Subscription Management**: Per-tenant subscription tracking
+
+---
+
+## 🛠️ Tech Stack
+
+### Frontend
+| Technology | Version | Purpose |
+|-----------|---------|---------|
+| React | 18.2.0 | UI library |
+| TypeScript | 5.3+ | Type-safe development |
+| Vite | 5.0+ | Build tool & dev server |
+| React Router | 6.20+ | Client-side routing |
+| Zustand | 4.4+ | State management |
+| Tailwind CSS | 3.3+ | Utility-first CSS |
+| Recharts | 2.10+ | Data visualization |
+| Lucide React | 0.292+ | Icons |
+| Axios | 1.6+ | HTTP client |
+| React Hook Form | 7.48+ | Form handling |
+| Zod | 3.22+ | Schema validation |
+| React Beautiful DND | 13.1+ | Drag & drop |
+| React Hot Toast | 2.4+ | Notifications |
+
+### Backend
+| Technology | Version | Purpose |
+|-----------|---------|---------|
+| Node.js | 18+ | Runtime |
+| Express.js | 5.2+ | Web framework |
+| TypeScript | Optional | Type safety |
+| PostgreSQL | 12+ | Relational database |
+| Redis | 6+ | Caching & sessions |
+| JWT | 9.0+ | Authentication |
+| bcrypt | 6.0+ | Password hashing |
+| Express Validator | 7.3+ | Input validation |
+| IORedis | 5.9+ | Redis client |
+| CORS | 2.8+ | Cross-origin support |
+| Nodemon | 3.1+ | Development tool |
+
+---
+
+## 📁 Project Structure
+
+### Root Directory
+```
+-Multi-Tenant-SaaS-Work-Management-Platform/
+├── FRONTEND/                 # React frontend application
+│   ├── src/
+│   │   ├── components/      # Reusable UI components
+│   │   ├── pages/           # Page components
+│   │   ├── services/        # API services
+│   │   ├── stores/          # Zustand stores (state)
+│   │   ├── types/           # TypeScript types
+│   │   ├── App.tsx
+│   │   └── main.tsx
+│   ├── package.json
+│   ├── vite.config.ts
+│   ├── tailwind.config.js
+│   ├── tsconfig.json
+│   └── README.md
+│
+├── BACKEND1/                # Express backend application
+│   ├── src/
+│   │   ├── app.js          # Express app setup
+│   │   ├── server.js       # Server entry point
+│   │   ├── config/         # Configuration files
+│   │   │   ├── db.js       # PostgreSQL connection
+│   │   │   └── redis.js    # Redis connection
+│   │   ├── middlewares/    # Express middlewares
+│   │   ├── modules/        # Feature modules
+│   │   │   ├── auth/       # Authentication
+│   │   │   ├── users/      # User management
+│   │   │   ├── projects/   # Project management
+│   │   │   ├── tasks/      # Task management
+│   │   │   ├── workflows/  # Workflow configuration
+│   │   │   ├── automations/# Automation rules
+│   │   │   ├── analytics/  # Analytics & reporting
+│   │   │   └── workspaces/ # Workspace/tenant management
+│   │   └── workers/        # Background workers for jobs
+│   ├── package.json
+│   └── README.md (if exists)
+│
+├── ProjectDescription       # Project overview document
+├── .gitignore
+└── .git/
+```
+
+### Frontend Structure (Detailed)
+```
+FRONTEND/src/
+├── components/
+│   ├── ui/               # Base UI components
+│   │   ├── Button.tsx
+│   │   ├── Input.tsx
+│   │   ├── Card.tsx
+│   │   ├── Modal.tsx
+│   │   ├── Badge.tsx
+│   │   └── ...
+│   └── layout/           # Layout components
+│       ├── Header.tsx
+│       ├── Sidebar.tsx
+│       ├── Navigation.tsx
+│       └── Footer.tsx
+├── pages/
+│   ├── auth/
+│   │   ├── Login.tsx
+│   │   ├── Register.tsx
+│   │   └── ForgotPassword.tsx
+│   ├── dashboard/        # Dashboard page
+│   ├── tasks/            # Task management
+│   ├── projects/         # Project management
+│   ├── analytics/        # Analytics dashboard
+│   ├── workflows/        # Workflow configuration
+│   ├── rbac/             # RBAC management
+│   └── settings/         # User settings
+├── services/
+│   ├── api.ts           # Axios instance & configuration
+│   ├── auth.ts          # Auth API calls
+│   ├── tasks.ts         # Task API calls
+│   ├── projects.ts      # Project API calls
+│   ├── analytics.ts     # Analytics API calls
+│   └── ...
+├── stores/              # Zustand state management
+│   ├── authStore.ts     # Auth state
+│   ├── taskStore.ts     # Task state
+│   ├── projectStore.ts  # Project state
+│   └── ...
+├── types/
+│   ├── auth.ts
+│   ├── task.ts
+│   ├── project.ts
+│   ├── user.ts
+│   └── ...
+├── App.tsx              # Main app component
+├── main.tsx             # Entry point
+└── index.css            # Global styles
+```
+
+### Backend Structure (Detailed)
+```
+BACKEND1/src/
+├── config/
+│   ├── db.js            # PostgreSQL setup
+│   └── redis.js         # Redis setup
+├── middlewares/
+│   ├── auth.js          # JWT verification
+│   ├── errorHandler.js  # Error handling
+│   ├── validation.js    # Input validation
+│   ├── tenantContext.js # Multi-tenant isolation
+│   └── rbac.js          # RBAC enforcement
+├── modules/
+│   ├── auth/
+│   │   ├── authController.js
+│   │   ├── authService.js
+│   │   ├── authRoutes.js
+│   │   └── authSchema.js
+│   ├── users/
+│   │   ├── userController.js
+│   │   ├── userService.js
+│   │   ├── userRoutes.js
+│   │   └── userSchema.js
+│   ├── projects/
+│   │   ├── projectController.js
+│   │   ├── projectService.js
+│   │   ├── projectRoutes.js
+│   │   └── projectSchema.js
+│   ├── tasks/
+│   │   ├── taskController.js
+│   │   ├── taskService.js
+│   │   ├── taskRoutes.js
+│   │   └── taskSchema.js
+│   ├── workflows/
+│   │   ├── workflowController.js
+│   │   ├── workflowService.js
+│   │   ├── workflowRoutes.js
+│   │   └── workflowSchema.js
+│   ├── automations/
+│   │   ├── automationController.js
+│   │   ├── automationService.js
+│   │   ├── automationRoutes.js
+│   │   └── automationSchema.js
+│   ├── analytics/
+│   │   ├── analyticsController.js
+│   │   ├── analyticsService.js
+│   │   ├── analyticsRoutes.js
+│   │   └── queryBuilder.js
+│   └── workspaces/
+│       ├── workspaceController.js
+│       ├── workspaceService.js
+│       ├── workspaceRoutes.js
+│       └── workspaceSchema.js
+├── workers/             # Background jobs
+│   ├── taskWorker.js
+│   ├── notificationWorker.js
+│   └── analyticsWorker.js
+├── app.js               # Express app configuration
+└── server.js            # Server startup
+```
+
+---
+
+## 🚀 Installation & Setup
+
+### Prerequisites
+- **Node.js**: v18 or higher
+- **npm**: v9 or higher (or yarn/pnpm)
+- **PostgreSQL**: v12 or higher
+- **Redis**: v6 or higher
+- **Git**: Latest version
+
+### Step 1: Clone the Repository
+```bash
+git clone https://github.com/ROHITKINDARLE/-Multi-Tenant-SaaS-Work-Management-Platform.git
+cd -Multi-Tenant-SaaS-Work-Management-Platform
+```
+
+### Step 2: Setup Backend
+
+```bash
+cd BACKEND1
+
+# Install dependencies
+npm install
+
+# Create .env file
+cat > .env << EOF
+# Server Configuration
+PORT=5000
+NODE_ENV=development
+
+# Database Configuration
+DB_HOST=localhost
+DB_PORT=5432
+DB_NAME=dops_platform
+DB_USER=postgres
+DB_PASSWORD=postgres
+DATABASE_URL=postgresql://postgres:postgres@localhost:5432/dops_platform
+
+# Redis Configuration
+REDIS_URL=redis://localhost:6379
+REDIS_HOST=localhost
+REDIS_PORT=6379
+REDIS_PASSWORD=
+
+# JWT Configuration
+JWT_SECRET=your_super_secret_jwt_key_here_change_in_production
+JWT_EXPIRY=7d
+REFRESH_TOKEN_SECRET=your_refresh_token_secret_here
+REFRESH_TOKEN_EXPIRY=30d
+
+# CORS Configuration
+CORS_ORIGIN=http://localhost:5173
+
+# Email Configuration (Optional)
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_USER=your-email@gmail.com
+SMTP_PASS=your-email-password
+
+# AWS or Cloud Storage (Optional)
+AWS_ACCESS_KEY_ID=
+AWS_SECRET_ACCESS_KEY=
+AWS_REGION=us-east-1
+AWS_S3_BUCKET=
+
+# Stripe/Payment (Optional)
+STRIPE_SECRET_KEY=
+STRIPE_PUBLISHABLE_KEY=
+EOF
+
+# Create PostgreSQL database
+createdb dops_platform
+
+# Run migrations (if available)
+# npm run migrate
+
+# Start development server
+npm run dev
+```
+
+Server runs on: **http://localhost:5000**
+
+### Step 3: Setup Frontend
+
+```bash
+cd FRONTEND
+
+# Install dependencies
+npm install
+
+# Create .env.local file
+cat > .env.local << EOF
+# API Configuration
+VITE_API_URL=http://localhost:5000
+VITE_API_TIMEOUT=10000
+
+# App Configuration
+VITE_APP_NAME=DOPS
+VITE_APP_VERSION=0.1.0
+VITE_ENVIRONMENT=development
+
+# Feature Flags
+VITE_ENABLE_ANALYTICS=true
+VITE_ENABLE_AUTOMATION=true
+VITE_ENABLE_RBAC=true
+EOF
+
+# Start development server
+npm run dev
+```
+
+Frontend runs on: **http://localhost:5173**
+
+### Step 4: Access Application
+
+1. Open browser: **http://localhost:5173**
+2. Login with demo credentials:
+   - **Email**: demo@example.com
+   - **Password**: demo12345
+3. Explore the platform
+
+---
+
+## ⚙️ Configuration
+
+### Backend Configuration (.env)
+
+```env
+# Server
+PORT=5000
+NODE_ENV=development|production
+
+# Database
+DATABASE_URL=postgresql://user:pass@localhost:5432/dbname
+DB_HOST=localhost
+DB_PORT=5432
+DB_NAME=dops_platform
+DB_USER=postgres
+DB_PASSWORD=postgres
+
+# Redis
+REDIS_URL=redis://localhost:6379
+REDIS_HOST=localhost
+REDIS_PORT=6379
+
+# JWT
+JWT_SECRET=secret_key_here
+JWT_EXPIRY=7d
+REFRESH_TOKEN_SECRET=refresh_secret_here
+REFRESH_TOKEN_EXPIRY=30d
+
+# CORS
+CORS_ORIGIN=http://localhost:5173
+
+# Logging
+LOG_LEVEL=debug|info|warn|error
+```
+
+### Frontend Configuration (.env.local)
+
+```env
+# API
+VITE_API_URL=http://localhost:5000
+
+# App
+VITE_APP_NAME=DOPS
+VITE_ENVIRONMENT=development|production
+
+# Features
+VITE_ENABLE_ANALYTICS=true
+VITE_ENABLE_AUTOMATION=true
+```
+
+---
+
+## ▶️ Running the Application
+
+### Development Mode
+
+**Terminal 1 - Backend:**
+```bash
+cd BACKEND1
+npm run dev
+```
+
+**Terminal 2 - Frontend:**
+```bash
+cd FRONTEND
+npm run dev
+```
+
+### Production Build
+
+**Backend:**
+```bash
+cd BACKEND1
+npm run build  # If TypeScript build exists
+npm start      # or NODE_ENV=production node src/server.js
+```
+
+**Frontend:**
+```bash
+cd FRONTEND
+npm run build
+npm run preview
+```
+
+### Docker (Optional)
+
+Create Dockerfile for backend:
+```dockerfile
+FROM node:18-alpine
+WORKDIR /app
+COPY package*.json ./
+RUN npm install --production
+COPY src ./src
+ENV NODE_ENV=production
+EXPOSE 5000
+CMD ["node", "src/server.js"]
+```
+
+Build and run:
+```bash
+docker build -t dops-backend .
+docker run -p 5000:5000 dops-backend
+```
+
+---
+
+## 📡 API Documentation
+
+### Base URL
+```
+http://localhost:5000/api
+```
+
+### Authentication Endpoints
+
+#### Register User
+```http
+POST /auth/register
+Content-Type: application/json
+
+{
+  "name": "John Doe",
+  "email": "john@example.com",
+  "password": "securePassword123",
+  "companyName": "Acme Corp"
+}
+```
+
+#### Login
+```http
+POST /auth/login
+Content-Type: application/json
+
+{
+  "email": "john@example.com",
+  "password": "securePassword123"
+}
+
+Response:
+{
+  "success": true,
+  "token": "jwt_token_here",
+  "refreshToken": "refresh_token_here",
+  "user": { ... }
+}
+```
+
+### Tasks Endpoints
+
+#### Get All Tasks
+```http
+GET /tasks?projectId=123&status=in_progress
+Authorization: Bearer <token>
+```
+
+#### Create Task
+```http
+POST /tasks
+Authorization: Bearer <token>
+Content-Type: application/json
+
+{
+  "title": "Build user dashboard",
+  "description": "Create responsive dashboard",
+  "projectId": "123",
+  "assignee": "userId",
+  "priority": "high",
+  "dueDate": "2024-12-31",
+  "status": "todo"
+}
+```
+
+#### Update Task
+```http
+PUT /tasks/:taskId
+Authorization: Bearer <token>
+Content-Type: application/json
+
+{
+  "title": "Updated title",
+  "status": "in_progress",
+  "priority": "medium"
+}
+```
+
+#### Delete Task
+```http
+DELETE /tasks/:taskId
+Authorization: Bearer <token>
+```
+
+### Projects Endpoints
+
+#### Get All Projects
+```http
+GET /projects?companyId=123
+Authorization: Bearer <token>
+```
+
+#### Create Project
+```http
+POST /projects
+Authorization: Bearer <token>
+Content-Type: application/json
+
+{
+  "name": "Website Redesign",
+  "description": "Redesign company website",
+  "startDate": "2024-01-01",
+  "endDate": "2024-06-30",
+  "team": ["userId1", "userId2"]
+}
+```
+
+### Workflows Endpoints
+
+#### Get Workflows
+```http
+GET /workflows?workspaceId=123
+Authorization: Bearer <token>
+```
+
+#### Create Custom Workflow
+```http
+POST /workflows
+Authorization: Bearer <token>
+Content-Type: application/json
+
+{
+  "name": "Custom Workflow",
+  "states": ["todo", "in_review", "done"],
+  "transitions": [
+    { "from": "todo", "to": "in_review" },
+    { "from": "in_review", "to": "done" }
+  ]
+}
+```
+
+### Analytics Endpoints
+
+#### Get Task Metrics
+```http
+GET /analytics/tasks?startDate=2024-01-01&endDate=2024-12-31
+Authorization: Bearer <token>
+```
+
+#### Get Team Performance
+```http
+GET /analytics/team-performance?timeRange=7d
+Authorization: Bearer <token>
+```
+
+---
+
+## 🎨 Frontend Modules
+
+### Authentication Module
+- **Login Page**: Email/password authentication
+- **Register Page**: New user signup
+- **Forgot Password**: Password recovery
+- **JWT Token Management**: Automatic token refresh
+
+### Dashboard Module
+- **Metrics Overview**: Tasks, in progress, overdue counts
+- **Activity Feed**: Recent updates and activities
+- **Quick Actions**: Fast access to common tasks
+- **Charts**: Visual data representation
+
+### Task Management Module
+- **Kanban Board**: Drag-and-drop task cards
+- **List View**: Traditional table view
+- **Task Details**: Full task information modal
+- **Filtering & Sorting**: Advanced task filtering
+- **Bulk Actions**: Multi-select operations
+
+### Project Management Module
+- **Project List**: All company projects
+- **Project Details**: Comprehensive project view
+- **Team Assignment**: Add/remove team members
+- **Progress Tracking**: Visual progress indicators
+- **Settings**: Project configuration
+
+### Workflow Configuration Module
+- **Workflow Builder**: Visual workflow designer
+- **State Management**: Create custom states
+- **Transitions**: Define state transitions
+- **Automation Rules**: Configure auto-transitions
+- **Templates**: Pre-built workflow templates
+
+### Analytics Module
+- **Dashboard**: Key metrics visualization
+- **Reports**: Custom report generation
+- **Charts**: Multiple chart types
+- **Time Range Filtering**: 24h, 7d, 30d, 90d
+- **Data Export**: CSV/PDF export
+
+### RBAC Management Module
+- **Role Configuration**: Create and manage roles
+- **Permission Management**: Granular permission control
+- **User Assignment**: Assign roles to users
+- **Audit Trail**: Track permission changes
+
+---
+
+## 🔧 Backend Modules
+
+### Authentication Module (`modules/auth/`)
+- User registration and login
+- JWT token generation and validation
+- Password hashing with bcrypt
+- Refresh token mechanism
+- Session management
+
+### Users Module (`modules/users/`)
+- User profile management
+- User preferences
+- User search and filtering
+- Bulk user operations
+- User deactivation/activation
+
+### Projects Module (`modules/projects/`)
+- Project CRUD operations
+- Project archiving
+- Team member assignment
+- Project status tracking
+- Project timeline management
+
+### Tasks Module (`modules/tasks/`)
+- Task creation and management
+- Task assignment and delegation
+- Task status workflow
+- Task comments and activity
+- Bulk task operations
+
+### Workflows Module (`modules/workflows/`)
+- Workflow template management
+- State definition
+- Transition configuration
+- Workflow versioning
+- Default workflow setup
+
+### Automations Module (`modules/automations/`)
+- Automation rule creation
+- Trigger configuration
+- Action definition
+- Rule execution
+- Automation logging
+
+### Analytics Module (`modules/analytics/`)
+- Aggregated metrics calculation
+- Report generation
+- Data export
+- Analytics caching
+- Performance metrics
+
+### Workspaces Module (`modules/workspaces/`)
+- Multi-tenant workspace management
+- Workspace configuration
+- Workspace members
+- Subscription management
+- Data isolation
+
+---
+
+## 🗄️ Database Schema (PostgreSQL)
+
+### Core Tables
+
+#### users
+```sql
+CREATE TABLE users (
+  id SERIAL PRIMARY KEY,
+  workspace_id INTEGER REFERENCES workspaces(id),
+  name VARCHAR(255) NOT NULL,
+  email VARCHAR(255) UNIQUE NOT NULL,
+  password_hash VARCHAR(255) NOT NULL,
+  role VARCHAR(50) DEFAULT 'member',
+  avatar_url TEXT,
+  is_active BOOLEAN DEFAULT true,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+```
+
+#### projects
+```sql
+CREATE TABLE projects (
+  id SERIAL PRIMARY KEY,
+  workspace_id INTEGER REFERENCES workspaces(id),
+  name VARCHAR(255) NOT NULL,
+  description TEXT,
+  status VARCHAR(50),
+  start_date DATE,
+  end_date DATE,
+  owner_id INTEGER REFERENCES users(id),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+```
+
+#### tasks
+```sql
+CREATE TABLE tasks (
+  id SERIAL PRIMARY KEY,
+  project_id INTEGER REFERENCES projects(id),
+  title VARCHAR(255) NOT NULL,
+  description TEXT,
+  status VARCHAR(50) NOT NULL,
+  priority VARCHAR(50),
+  assignee_id INTEGER REFERENCES users(id),
+  creator_id INTEGER REFERENCES users(id),
+  due_date DATE,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+```
+
+#### workflows
+```sql
+CREATE TABLE workflows (
+  id SERIAL PRIMARY KEY,
+  workspace_id INTEGER REFERENCES workspaces(id),
+  name VARCHAR(255) NOT NULL,
+  states JSONB,
+  transitions JSONB,
+  is_default BOOLEAN DEFAULT false,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+```
+
+#### workspaces
+```sql
+CREATE TABLE workspaces (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(255) UNIQUE NOT NULL,
+  subscription_plan VARCHAR(50),
+  owner_id INTEGER REFERENCES users(id),
+  is_active BOOLEAN DEFAULT true,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+```
+
+---
+
+## 🔐 Authentication & Security
+
+### Authentication Flow
+1. User registers/logs in with email and password
+2. Backend verifies credentials
+3. JWT token generated with payload: `{ userId, workspaceId, role }`
+4. Frontend stores token in localStorage/sessionStorage
+5. All requests include `Authorization: Bearer <token>` header
+6. Backend verifies token on each request
+7. Automatic token refresh before expiry
+
+### Security Features
+- **Password Hashing**: bcrypt with salt rounds
+- **JWT Tokens**: Secure token-based authentication
+- **CORS**: Configured for frontend origin
+- **Input Validation**: Express-validator on all endpoints
+- **RBAC**: Role-based access control enforcement
+- **Multi-Tenancy**: Tenant-aware data isolation
+- **Rate Limiting**: API rate limiting (recommended)
+- **HTTPS**: SSL/TLS in production
+
+### Permission Levels
+- **Admin**: Full system access
+- **Manager**: Project and team management
+- **Lead**: Team lead operations
+- **Member**: Basic operations
+- **Viewer**: Read-only access
+
+---
+
+## 📦 Deployment
+
+### Deployment Checklist
+
+- [ ] Set `NODE_ENV=production`
+- [ ] Update `CORS_ORIGIN` for production domain
+- [ ] Configure SSL/TLS certificates
+- [ ] Setup environment variables
+- [ ] Configure database backups
+- [ ] Setup Redis persistence
+- [ ] Enable logging and monitoring
+- [ ] Configure CDN for static assets
+- [ ] Setup error tracking (Sentry)
+- [ ] Configure CI/CD pipeline
+
+### Deployment Platforms
+
+**Heroku:**
+```bash
+heroku create dops-app
+git push heroku main
+```
+
+**AWS:**
+- Elastic Beanstalk for backend
+- CloudFront for frontend
+- RDS for PostgreSQL
+- ElastiCache for Redis
+
+**Azure:**
+- App Service for backend
+- Static Web Apps for frontend
+- Database for PostgreSQL
+- Cache for Redis
+
+**DigitalOcean:**
+- Droplets for backend/frontend
+- Managed Database for PostgreSQL
+- Redis cluster
+- App Platform
+
+---
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create feature branch: `git checkout -b feature/YourFeature`
+3. Commit changes: `git commit -m 'Add YourFeature'`
+4. Push to branch: `git push origin feature/YourFeature`
+5. Submit Pull Request with description
+
+### Development Guidelines
+- Follow project code style
+- Write meaningful commit messages
+- Update documentation
+- Add tests for new features
+- Ensure backward compatibility
+
+---
+
+## 📝 License
+
+This project is licensed under the ISC License - see LICENSE file for details.
+
+---
+
+## 📧 Support & Contact
+
+For issues, features requests, or support:
+- **GitHub**: [@ROHITKINDARLE](https://github.com/ROHITKINDARLE)
+- **Repository**: [Multi-Tenant-SaaS-Work-Management-Platform](https://github.com/ROHITKINDARLE/-Multi-Tenant-SaaS-Work-Management-Platform)
+
+---
+
+## 🚢 Quick Reference
+
+### Common Commands
+
+**Backend:**
+```bash
+cd BACKEND1
+npm install          # Install dependencies
+npm run dev          # Development server
+npm run build        # Build (if applicable)
+npm test             # Run tests
+```
+
+**Frontend:**
+```bash
+cd FRONTEND
+npm install          # Install dependencies
+npm run dev          # Development server
+npm run build        # Production build
+npm run preview      # Preview production build
+npm run lint         # Lint code
+```
+
+---
+
+## 📊 Project Statistics
+
+- **Frontend**: React/TypeScript SPA
+- **Backend**: Node.js/Express REST API
+- **Database**: PostgreSQL with Redis
+- **Authentication**: JWT-based
+- **Deployment**: Cloud-ready
+- **Users**: Multi-tenant support
+- **Users per workspace**: Unlimited
+- **Data retention**: Configurable
+
+---
+
+## 🎓 Learning Resources
+
+- [React Documentation](https://react.dev)
+- [Express.js Guide](https://expressjs.com)
+- [PostgreSQL Docs](https://www.postgresql.org/docs/)
+- [TypeScript Handbook](https://www.typescriptlang.org/docs/)
+- [Zustand Documentation](https://github.com/pmndrs/zustand)
+- [Tailwind CSS](https://tailwindcss.com)
+
+---
+
+**Last Updated**: April 3, 2026  
+**Version**: 1.0.0  
+**Status**: Active Development  
+**Maintainer**: [@ROHITKINDARLE](https://github.com/ROHITKINDARLE)
